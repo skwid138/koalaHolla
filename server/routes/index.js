@@ -7,7 +7,7 @@ var router = express.Router();
 
 //base url
 router.get('/', function (req, res) { // change this to router
-    res.sendFile(path.resolve('public/views/index.html'));
+    res.sendFile(path.resolve('server/public/views/index.html'));
 }); // end base
 
 // export
