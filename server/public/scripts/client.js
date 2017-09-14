@@ -8,6 +8,9 @@ $( document ).ready( function(){
   //listener for delete button
   $('table').on('click', '.deleteButton', deleteKoala);
 
+  //listener for transfer button
+  $('table').on('click', '.transferButton', transferKoala);
+
   // add koala button click
   $( '#addButton' ).on( 'click', function () {
     // get user input and put in an object
@@ -40,7 +43,7 @@ function getKoalas(){
     type: 'GET',
     success: function( data ){
       console.log( 'got some koalas: ', data );
-      var $kol = $('#viewKoalas');
+      var $viewKoalas = $('#viewKoalas');
       for (i = 0; i < data.length; i++) {
        var $tr = $('<tr data-id="' + data[i].id + '">'); // adds primary id as a .data()
         $tr.append('<td>' + data[i].name + '</td>');
@@ -49,7 +52,12 @@ function getKoalas(){
         $tr.append('<td>' + data[i].transfer + '</td>');
         $tr.append('<td>' + data[i].notes + '</td>');
         $tr.append('<button class="deleteButton">Delete</button>');
-        $kol.append($tr);
+        if (data[i].transfer) {
+          $viewKoalas.append($tr);
+        } else {
+          $tr.append('<button class="transferButton">Transfer</button>');
+          $viewKoalas.append($tr);
+        }
       }//END for loop
     } // end success
   }); //end ajax
@@ -82,4 +90,17 @@ function saveKoala( newKoala ){
       getKoalas();
     } // end success
   }); //end ajax
+}
+
+function transferKoala() {
+  console.log('in transferKoala');
+  var thisKoala = $(this).parent().data('id');
+  $.ajax({
+    method: 'PUT',
+    url: '/koalas/' + thisKoala,
+    success: function (response) {
+      console.log('server put response ->', response);
+      getKoalas();
+    } // end success
+  }); // end ajax
 }
