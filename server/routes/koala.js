@@ -96,7 +96,7 @@
                      console.log('query error ->', queryError);
                      res.sendStatus(500);
                  } else {
-                     res.sendStatus(200);
+                     res.sendStatus(202);
                  } // end client if else
              }); // end client query
          } // end connect else
