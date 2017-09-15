@@ -80,6 +80,7 @@
 
  router.put('/:id', function (req, res) {
      console.log('in koala PUT route');
+     // console.log('put req.body ->', req.body); - this is empty, I think because I did not have a data property in the AJAX call
      var koalaId = req.params.id;
      pool.connect(function (error, client, done) {
          if (error) {
